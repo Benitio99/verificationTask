@@ -1,4 +1,5 @@
-package src;
+package main;
+//package src;
 
 public class CarParkSystem {
 

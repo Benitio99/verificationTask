@@ -1,4 +1,5 @@
-package src;
+package main;
+//package src;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,54 +7,40 @@ import java.util.Collections;
 
 public class Rate {
 
-    CarParkKind kind;
-    BigDecimal hourlyNormalRate;
-    BigDecimal hourlyReducedRate;
-    ArrayList<Period> reduced;
-    ArrayList<Period> normal;
+    private CarParkKind kind;
+    private BigDecimal hourlyNormalRate;
+    private BigDecimal hourlyReducedRate;
+    private ArrayList<Period> reduced;
+    private ArrayList<Period> normal;
+
+    public Rate() {
+
+    }
 
     public Rate(CarParkKind kind, BigDecimal hourlyNormalRate, BigDecimal hourlyReducedRate,
             ArrayList<Period> reducedPeriods, ArrayList<Period> normalPeriods) {
         this.kind = kind;
 
-        try {
-            normalRateGreaterOrEqualToReduced(hourlyNormalRate, hourlyReducedRate);
-            try {
-                greaterThanZero(hourlyNormalRate.intValue());
-            } catch (IllegalArgumentException error) {
-                System.out.println(hourlyNormalRate + " must be greater than zero.");
-            }
-            try {
-                greaterThanZero(hourlyReducedRate.intValue());
-            } catch (IllegalArgumentException error) {
-                System.out.println(hourlyReducedRate + " must be greater than zero.");
-
-            }
-            this.hourlyNormalRate = hourlyNormalRate;
-            this.hourlyReducedRate = hourlyReducedRate;
-        } catch (IllegalArgumentException error) {
-            System.out.println(hourlyNormalRate + " must be greater or equal to " + hourlyReducedRate + ".");
+        if (!normalRateGreaterOrEqualToReduced(hourlyNormalRate, hourlyReducedRate)) {
+            throw new IllegalArgumentException(
+                    hourlyNormalRate + " must be greater or equal to " + hourlyReducedRate + ".");
+        } else if (!greaterThanZero(hourlyNormalRate.intValue())) {
+            throw new IllegalArgumentException(hourlyNormalRate + " must be greater than zero.");
+        } else if (!greaterThanZero(hourlyReducedRate.intValue())) {
+            throw new IllegalArgumentException(hourlyReducedRate + " must be greater than zero.");
         }
-        try {
-            try {
-                checkforOverlappingPeriods(reducedPeriods);
-            } catch (IllegalArgumentException error) {
-                System.out.println("Periods in a list must not overlap" + reducedPeriods);
-            }
-            try {
-                checkforOverlappingPeriods(normalPeriods);
-            } catch (IllegalArgumentException error) {
-                System.out.println("Periods in a list must not overlap." + normalPeriods);
+        this.hourlyNormalRate = hourlyNormalRate;
+        this.hourlyReducedRate = hourlyReducedRate;
 
-            }
-            checkPeriodListsOverlapping(reducedPeriods, normalPeriods);
-
-        } catch (IllegalArgumentException error) {
-            System.out.println("Periods in the reduced and normatl rates must not overlap. " + normalPeriods + " : "
-                    + reducedPeriods);
-
+        if (!checkforOverlappingPeriods(reducedPeriods)) {
+            throw new IllegalArgumentException("Periods in a list must not overlap" + reducedPeriods);
+        } else if (!checkforOverlappingPeriods(normalPeriods)) {
+            throw new IllegalArgumentException("Periods in a list must not overlap." + normalPeriods);
+        } else if (!checkPeriodListsOverlapping(reducedPeriods, normalPeriods)) {
+            throw new IllegalArgumentException(
+                    "Periods in the reduced and normatl rates must not overlap. " + normalPeriods + " : "
+                            + reducedPeriods);
         }
-
         this.reduced = reducedPeriods;
         this.normal = normalPeriods;
     }
@@ -115,13 +102,13 @@ public class Rate {
         }
 
         try {
-            if (list.get(list.size() - 1).getEndhour() < start) {
+            if (list.get(list.size() - 1).getEndHour() < start) {
                 throw new IllegalArgumentException();
             } else {
                 list.add(period);
             }
         } catch (IllegalArgumentException error) {
-            System.out.println("Periods in a list must not overlap. " + list.get(list.size() - 1).getEndhour()
+            System.out.println("Periods in a list must not overlap. " + list.get(list.size() - 1).getEndHour()
                     + " overlaps with " + period.getStartHour());
         }
         sortPeriods(list);
@@ -166,12 +153,12 @@ public class Rate {
         try {
             while (i < listOne.size() && k < listTwo.size()) {
                 if (listOne.get(i).getStartHour() < listTwo.get(k).getStartHour()) {
-                    if (listOne.get(i).getEndhour() > listTwo.get(k).getStartHour()) {
+                    if (listOne.get(i).getEndHour() > listTwo.get(k).getStartHour()) {
                         throw new IllegalArgumentException();
                     }
                     i++;
                 } else if (listOne.get(i).getStartHour() > listTwo.get(k).getStartHour()) {
-                    if (listTwo.get(k).getEndhour() > listOne.get(i).getStartHour()) {
+                    if (listTwo.get(k).getEndHour() > listOne.get(i).getStartHour()) {
                         throw new IllegalArgumentException();
                     }
                     k++;
@@ -192,7 +179,7 @@ public class Rate {
 
         result = false;
         for (int i = 1; i < list.size(); i++) {
-            if (checkForOverlapInTwoPeriods(list.get(i - 1).getEndhour(), list.get(i).getStartHour())) {
+            if (checkForOverlapInTwoPeriods(list.get(i - 1).getEndHour(), list.get(i).getStartHour())) {
                 return true;
             }
         }
@@ -220,12 +207,25 @@ public class Rate {
     public BigDecimal calculate(Period periodStay) {
 
         BigDecimal rate = new BigDecimal("0");
+        int duration = periodStay.duration();
+        // Period copy = periodStay;
 
-        for (int i = 0; i < getNormal().size(); i++) {
-            rate.add(getHourlyNormalRate().multiply(getNormal().get(i).duration()));
+        while (duration > 0) {
+            for (int i = 0; i < normal.size(); i++) {
+                if (normal.get(i).overlaps(periodStay)) {
+                    periodStay.setEndHour(periodStay.getEndHour() - 1);
+                    rate.add(getHourlyNormalRate());
+                    duration--;
+                }
+            }
+            for (int i = 0; i < reduced.size(); i++) {
+                if (reduced.get(i).overlaps(periodStay)) {
+                    periodStay.setEndHour(periodStay.getEndHour() - 1);
+                    rate.add(getHourlyReducedRate());
+                    duration--;
+                }
+            }
         }
-
         return rate;
     }
-
 }
