@@ -15,7 +15,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 //import cm.Rate;
 
 @TestInstance(Lifecycle.PER_CLASS)
-class BennettPierceTestTask1 {
+class BennettPierceTestTask2 {
 
         /**
          * Data
@@ -84,19 +84,15 @@ class BennettPierceTestTask1 {
                         12, 8,
                         12, 10, 19, 12, 8, 12, 10, 19, 12 };
 
-        static ArrayList<Period> reducedPeriods = new ArrayList<Period>();
-        static ArrayList<Period> normalPeriods = new ArrayList<Period>();
+        static ArrayList<Period> reducedPeriods;
+        static ArrayList<Period> normalPeriods;
 
         static ArrayList<Rate> data = new ArrayList<Rate>(numberRateTests);
         static ArrayList<Period> periodsToTest = new ArrayList<Period>(numberRateTests);
-        static Object[] rateTestExpectedResults = { ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION,
-                        ILLEGAL_ARGUMENT_EXCEPTION, 24, 5003, ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION, 0,
-                        ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION, 2, ILLEGAL_ARGUMENT_EXCEPTION, 6000,
-                        ILLEGAL_ARGUMENT_EXCEPTION, 34, 25, 65, 10, ILLEGAL_ARGUMENT_EXCEPTION,
-                        ILLEGAL_ARGUMENT_EXCEPTION, 25, 45,
-                        0, ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION, 25, 45, 0,
-                        ILLEGAL_ARGUMENT_EXCEPTION,
-                        ILLEGAL_ARGUMENT_EXCEPTION };
+
+        static int[] rateTestExpectedValidResults = { 24, 5003, 0, 2, 6000, 34, 25, 65, 10, 25, 45, 0, 25, 45, 0 };
+        static int[] rateTestExpectedValidResultsIndices = { 3, 4, 7, 10, 12, 14, 15, 16, 17, 20, 21, 22, 25, 26, 27 };
+        static int[] rateTestExpectedExceptionResultsIndices = { 0, 1, 2, 5, 6, 8, 9, 11, 13, 18, 19, 23, 24, 28, 29 };
 
         @Test
         void periodTest() {
@@ -118,12 +114,59 @@ class BennettPierceTestTask1 {
                                                 }, "IllegalArgumentException was excepted.");
                                 System.out.print(" - error : " + thrown.getMessage());
                         }
-
                 }
         }
 
         @Test
-        void rateTest() {
+        void rateValidTest() {
+                System.out.println("\nTesting Rate Class...");
+                // System.out.println(periodsToTest);
+                // int index;
+                BigDecimal rate;
+                for (int i = 0; i < numberRateTests; i++) {
+
+                        reducedPeriods = new ArrayList<Period>();
+                        normalPeriods = new ArrayList<Period>();
+
+                        int index = rateTestExpectedValidResultsIndices[i];
+                        Rate rObject;
+                        Period periodToTest;
+
+                        System.out.println("\nTest: " + (index + 1));
+                        int result = rateTestExpectedValidResults[index];
+
+                        // Data Setup
+                        // periodsToTest.add(index, new Period(periodToTestStartHours[index],
+                        // periodToTestStartHours[index]));
+
+                        // System.out.println(periodsToTest);
+                        if (reducedStartHours[index].length > 0) {
+                                for (int k = 0; k < reducedStartHours[index].length; k++) {
+                                        reducedPeriods.add(new Period(reducedStartHours[index][k],
+                                                        reducedEndHours[index][k]));
+                                        System.out.println(k + " : " + reducedPeriods.get(k).duration());
+                                }
+                        }
+                        if (normalStartHours[index].length > 0) {
+                                for (int k = 0; k < normalStartHours[index].length; k++) {
+                                        normalPeriods.add(new Period(normalStartHours[index][k],
+                                                        normalEndHours[index][k]));
+                                        System.out.println(k + " : " + normalPeriods.get(k).duration());
+                                }
+                        }
+                        rObject = new Rate(kinds[index % 4], new BigDecimal(normalRates[index]),
+                                        new BigDecimal(reducedRates[index]), reducedPeriods, normalPeriods);
+                        periodToTest = new Period(periodToTestStartHours[index], periodToTestStartHours[index]);
+
+                        System.out.println(" - " + periodToTest);
+                        rate = rObject.calculate(periodToTest);
+                        assertEquals(result, rate);
+                        System.out.print(", rate : " + result);
+                }
+        }
+
+        @Test
+        void rateExceptionTest() {
                 System.out.println("\nTesting Rate Class...");
                 // System.out.println(periodsToTest);
                 // int index;
@@ -134,7 +177,7 @@ class BennettPierceTestTask1 {
                         Period periodToTest;
 
                         System.out.println("\nTest: " + (index + 1));
-                        Object result = rateTestExpectedResults[index];
+                        Object result = ILLEGAL_ARGUMENT_EXCEPTION;
 
                         try {
                                 // Data Setup
@@ -144,14 +187,14 @@ class BennettPierceTestTask1 {
                                 // System.out.println(periodsToTest);
                                 if (reducedStartHours[index].length > 0) {
                                         for (int k = 0; k < reducedStartHours[index].length; k++) {
-                                                reducedPeriods.add(index, new Period(reducedStartHours[index][k],
+                                                reducedPeriods.add(new Period(reducedStartHours[index][k],
                                                                 reducedEndHours[index][k]));
                                                 System.out.println(k + " : " + reducedPeriods.get(k).duration());
                                         }
                                 }
                                 if (normalStartHours[index].length > 0) {
                                         for (int k = 0; k < normalStartHours[index].length; k++) {
-                                                normalPeriods.add(index, new Period(normalStartHours[index][k],
+                                                normalPeriods.add(new Period(normalStartHours[index][k],
                                                                 normalEndHours[index][k]));
                                                 System.out.println(k + " : " + normalPeriods.get(k).duration());
                                         }
