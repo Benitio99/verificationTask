@@ -803,6 +803,7 @@ class BennettPierceTestTask3 {
 		BigDecimal answer = new BigDecimal(45);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
+
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 0
 	@Test
 	@DisplayName("reduced == ! overlapping")
@@ -826,6 +827,7 @@ class BennettPierceTestTask3 {
 		BigDecimal answer = new BigDecimal(0);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
+
 	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(8, 15), (10, 20)] reduced == !
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
@@ -851,6 +853,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
 	// STAFF 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 20), (8, 15)] reduced == !
 	// overlapping (5, 12) IllegalArgument Exception
 	@Test
@@ -876,6 +879,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// normal.notOverlapping(reduced) (2, 8) 25
 	@Test
@@ -903,6 +907,7 @@ class BennettPierceTestTask3 {
 		BigDecimal answer = new BigDecimal(25);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
+
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)]
 	// normal.notOverlapping(reduced) (0, 12) 45
 	@Test
@@ -930,6 +935,7 @@ class BennettPierceTestTask3 {
 		BigDecimal answer = new BigDecimal(45);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
+
 	// VISITOR 10 5 [] [] normal.notOverlapping(reduced) (6, 10) 0
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
@@ -950,6 +956,7 @@ class BennettPierceTestTask3 {
 		BigDecimal answer = new BigDecimal(0);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
+
 	// STAFF 10 5 [(1, 10)] [(5, 10)] normal.notOverlapping(reduced) (1, 19)
 	// IllegalArgument Exception
 	@Test
@@ -972,6 +979,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods overlaps", thrown.getMessage());
 
 	}
+
 	// STUDENT 10 5 [(5, 10)] [(1, 10)] normal.notOverlapping(reduced) (5, 12)
 	// IllegalArgument Exception
 	@Test
@@ -980,8 +988,6 @@ class BennettPierceTestTask3 {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
-		normalPeriods.add(new Period(3, 4));
-		normalPeriods.add(new Period(5, 6));
 
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(10, 20));
