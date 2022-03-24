@@ -419,8 +419,8 @@ class BennettPierceTestTask3 {
 		reducedPeriods.add(new Period(9, 10));
 		reducedPeriods.add(new Period(11, 12));
 
-		BigDecimal hourlyNormalRate = new BigDecimal(7);
-		BigDecimal hourlyReducedRate = new BigDecimal(1);
+		BigDecimal hourlyNormalRate = new BigDecimal(1);
+		BigDecimal hourlyReducedRate = new BigDecimal(7);
 
 		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
 				normalPeriods);
