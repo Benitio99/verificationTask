@@ -1160,7 +1160,27 @@ class BennettPierceTestTask3 {
 	}
 	// STAFF 10 5 NULL [(2, 3),(4, 5),(6, 7)] normal != NULL (2, 12) IllegalArgument
 	// Exception
+	@Test
+	@DisplayName("hourlyNormalRate != NULL")
+	void test37() throws IllegalArgumentException {
 
+		normalPeriods = null;
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(2, 3));
+		reducedPeriods.add(new Period(4, 5));
+		reducedPeriods.add(new Period(6, 7));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("periods cannot be null", thrown.getMessage());
+
+	}
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] NULL reduced != NULL (6, 10)
 	// IllegalArgument Exception
 
