@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > CarParkKind</title>
+  <title>Coverage Report > Rate</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,7 +20,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">cm</a>
 </div>
 
-<h1>Coverage Summary for Class: CarParkKind (cm)</h1>
+<h1>Coverage Summary for Class: Rate (cm)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -35,11 +35,15 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
+  Block, %
+</th>
+<th class="coverageStat 
+">
   Line, %
 </th>
 </tr>
 <tr>
-  <td class="name">CarParkKind</td>
+  <td class="name">Rate</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -53,7 +57,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (2/2)
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    94.4%
+  </span>
+  <span class="absValue">
+    (17/18)
   </span>
 </td>
 <td class="coverageStat">
@@ -61,7 +73,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (2/2)
+    (43/43)
   </span>
 </td>
 </tr>
@@ -75,9 +87,106 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package cm;
 <i class="no-highlight">2</i>&nbsp;
-<b class="fc"><i class="no-highlight">3</i>&nbsp;public enum CarParkKind {</b>
-<b class="fc"><i class="no-highlight">4</i>&nbsp;    STAFF, STUDENT, MANAGEMENT, VISITOR</b>
-<i class="no-highlight">5</i>&nbsp;}
+<i class="no-highlight">3</i>&nbsp;import java.math.BigDecimal;
+<i class="no-highlight">4</i>&nbsp;import java.util.ArrayList;
+<i class="no-highlight">5</i>&nbsp;import java.util.List;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;public class Rate {
+<i class="no-highlight">8</i>&nbsp;    // private CarParkKind kind;
+<i class="no-highlight">9</i>&nbsp;    private BigDecimal hourlyNormalRate;
+<i class="no-highlight">10</i>&nbsp;    private BigDecimal hourlyReducedRate;
+<b class="fc"><i class="no-highlight">11</i>&nbsp;    private ArrayList&lt;Period&gt; reduced = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">12</i>&nbsp;    private ArrayList&lt;Period&gt; normal = new ArrayList&lt;&gt;();</b>
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;    public Rate(CarParkKind kind, BigDecimal normalRate, BigDecimal reducedRate, ArrayList&lt;Period&gt; reducedPeriods,
+<b class="fc"><i class="no-highlight">15</i>&nbsp;            ArrayList&lt;Period&gt; normalPeriods) {</b>
+<b class="fc"><i class="no-highlight">16</i>&nbsp;        if (reducedPeriods == null || normalPeriods == null) {</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;            throw new IllegalArgumentException(&quot;periods cannot be null&quot;);</b>
+<i class="no-highlight">18</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        if (normalRate == null || reducedRate == null) {</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;            throw new IllegalArgumentException(&quot;The rates cannot be null&quot;);</b>
+<i class="no-highlight">21</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        if (normalRate.compareTo(BigDecimal.ZERO) &lt; 0 || reducedRate.compareTo(BigDecimal.ZERO) &lt; 0) {</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;            throw new IllegalArgumentException(&quot;A rate cannot be negative&quot;);</b>
+<i class="no-highlight">24</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        if (normalRate.compareTo(reducedRate) &lt;= 0) {</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;            throw new IllegalArgumentException(&quot;The normal rate cannot be less or equal to the reduced rate&quot;);</b>
+<i class="no-highlight">27</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">28</i>&nbsp;        if (!isValidPeriods(reducedPeriods) || !isValidPeriods(normalPeriods)) {</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;            throw new IllegalArgumentException(&quot;The periods are not valid individually&quot;);</b>
+<i class="no-highlight">30</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        if (!isValidPeriods(reducedPeriods, normalPeriods)) {</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;            throw new IllegalArgumentException(&quot;The periods overlaps&quot;);</b>
+<i class="no-highlight">33</i>&nbsp;        }
+<i class="no-highlight">34</i>&nbsp;        // this.kind = kind;
+<b class="fc"><i class="no-highlight">35</i>&nbsp;        this.hourlyNormalRate = normalRate;</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;        this.hourlyReducedRate = reducedRate;</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;        this.reduced = reducedPeriods;</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        this.normal = normalPeriods;</b>
+<i class="no-highlight">39</i>&nbsp;    }
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;    /**
+<i class="no-highlight">42</i>&nbsp;     * Checks if two collections of periods are valid together
+<i class="no-highlight">43</i>&nbsp;     * 
+<i class="no-highlight">44</i>&nbsp;     * @param periods1
+<i class="no-highlight">45</i>&nbsp;     * @param periods2
+<i class="no-highlight">46</i>&nbsp;     * @return true if the two collections of periods are valid together
+<i class="no-highlight">47</i>&nbsp;     */
+<i class="no-highlight">48</i>&nbsp;    private boolean isValidPeriods(ArrayList&lt;Period&gt; periods1, ArrayList&lt;Period&gt; periods2) {
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        Boolean isValid = true;</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        int i = 0;</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        while (i &lt; periods1.size() &amp;&amp; isValid) {</b>
+<b class="fc"><i class="no-highlight">52</i>&nbsp;            isValid = isValidPeriod(periods1.get(i), periods2);</b>
+<b class="fc"><i class="no-highlight">53</i>&nbsp;            i++;</b>
+<i class="no-highlight">54</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">55</i>&nbsp;        return isValid;</b>
+<i class="no-highlight">56</i>&nbsp;    }
+<i class="no-highlight">57</i>&nbsp;
+<i class="no-highlight">58</i>&nbsp;    /**
+<i class="no-highlight">59</i>&nbsp;     * checks if a collection of periods is valid
+<i class="no-highlight">60</i>&nbsp;     * 
+<i class="no-highlight">61</i>&nbsp;     * @param list the collection of periods to check
+<i class="no-highlight">62</i>&nbsp;     * @return true if the periods do not overlap
+<i class="no-highlight">63</i>&nbsp;     */
+<i class="no-highlight">64</i>&nbsp;    private Boolean isValidPeriods(ArrayList&lt;Period&gt; list) {
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        Boolean isValid = true;</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        if (list.size() &gt;= 2) {</b>
+<i class="no-highlight">67</i>&nbsp;            // Period secondPeriod;
+<b class="fc"><i class="no-highlight">68</i>&nbsp;            int i = 0;</b>
+<b class="fc"><i class="no-highlight">69</i>&nbsp;            int lastIndex = list.size() - 1;</b>
+<b class="pc"><i class="no-highlight">70</i>&nbsp;            while (i &lt; lastIndex &amp;&amp; isValid) {</b>
+<b class="fc"><i class="no-highlight">71</i>&nbsp;                isValid = isValidPeriod(list.get(i), ((List&lt;Period&gt;) list).subList(i + 1, lastIndex + 1));</b>
+<b class="fc"><i class="no-highlight">72</i>&nbsp;                i++;</b>
+<i class="no-highlight">73</i>&nbsp;            }
+<i class="no-highlight">74</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        return isValid;</b>
+<i class="no-highlight">76</i>&nbsp;    }
+<i class="no-highlight">77</i>&nbsp;
+<i class="no-highlight">78</i>&nbsp;    /**
+<i class="no-highlight">79</i>&nbsp;     * checks if a period is a valid addition to a collection of periods
+<i class="no-highlight">80</i>&nbsp;     * 
+<i class="no-highlight">81</i>&nbsp;     * @param period the Period addition
+<i class="no-highlight">82</i>&nbsp;     * @param list   the collection of periods to check
+<i class="no-highlight">83</i>&nbsp;     * @return true if the period does not overlap in the collecton of periods
+<i class="no-highlight">84</i>&nbsp;     */
+<i class="no-highlight">85</i>&nbsp;    private Boolean isValidPeriod(Period period, List&lt;Period&gt; list) {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        Boolean isValid = true;</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        int i = 0;</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        while (i &lt; list.size() &amp;&amp; isValid) {</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;            isValid = !period.overlaps(list.get(i));</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;            i++;</b>
+<i class="no-highlight">91</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">92</i>&nbsp;        return isValid;</b>
+<i class="no-highlight">93</i>&nbsp;    }
+<i class="no-highlight">94</i>&nbsp;
+<i class="no-highlight">95</i>&nbsp;    public BigDecimal calculate(Period periodStay) {
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        int normalRateHours = periodStay.occurences(normal);</b>
+<b class="fc"><i class="no-highlight">97</i>&nbsp;        int reducedRateHours = periodStay.occurences(reduced);</b>
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        return (this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours))).add(</b>
+<b class="fc"><i class="no-highlight">99</i>&nbsp;                this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));</b>
+<i class="no-highlight">100</i>&nbsp;    }
+<i class="no-highlight">101</i>&nbsp;
+<i class="no-highlight">102</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -104,7 +213,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-03-07 16:05</div>
+    <div style="float:right;">generated on 2022-03-14 15:49</div>
 </div>
 </body>
 </html>
