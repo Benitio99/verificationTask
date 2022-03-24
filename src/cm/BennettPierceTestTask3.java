@@ -215,9 +215,11 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(-5000);
 		BigDecimal hourlyReducedRate = new BigDecimal(1);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("A rate cannot be negative", thrown.getMessage());
 	}
 
 	// 2 STUDENT -1 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
@@ -239,13 +241,16 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(-1);
 		BigDecimal hourlyReducedRate = new BigDecimal(1);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("A rate cannot be negative", thrown.getMessage());
 	}
 
 	// MANAGEMENT 0 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// hourlyNormalRate >= 0 (6, 10) IllegalArgument
+	// not hitting correct boundary could be moved or removed or modified.
 	@Test
 	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = 0")
 	void test3() throws IllegalArgumentException {
@@ -263,9 +268,11 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(0);
 		BigDecimal hourlyReducedRate = new BigDecimal(1);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
 	}
 
 	// VISITOR 7 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] hourlyNormalRate
@@ -343,11 +350,13 @@ class BennettPierceTestTask3 {
 		reducedPeriods.add(new Period(11, 12));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(1);
-		BigDecimal hourlyReducedRate = new BigDecimal(5000);
+		BigDecimal hourlyReducedRate = new BigDecimal(-5000);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("A rate cannot be negative", thrown.getMessage());
 	}
 
 	// MANAGEMENT 1 -1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
@@ -369,9 +378,11 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(1);
 		BigDecimal hourlyReducedRate = new BigDecimal(-1);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("A rate cannot be negative", thrown.getMessage());
 	}
 
 	// VISITOR 1 0 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
@@ -405,6 +416,7 @@ class BennettPierceTestTask3 {
 
 	// STAFF 1 7 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] hourlyReducedRate
 	// >= 0 (1, 19) IllegalArgument Exception
+	// not hitting correct boundary could be moved or removed or modified.
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 7")
 	void test9() {
@@ -422,14 +434,17 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(1);
 		BigDecimal hourlyReducedRate = new BigDecimal(7);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
 
 	}
 
 	// STUDENT 1 5000 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// hourlyReducedRate >= 0 (5, 12) IllegalArgument Exception
+	// not hitting correct boundary could be moved or removed or modified.
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 5000")
 	void test10() {
@@ -444,16 +459,14 @@ class BennettPierceTestTask3 {
 		reducedPeriods.add(new Period(9, 10));
 		reducedPeriods.add(new Period(11, 12));
 
-		BigDecimal hourlyNormalRate = new BigDecimal(5000);
-		BigDecimal hourlyReducedRate = new BigDecimal(1);
+		BigDecimal hourlyNormalRate = new BigDecimal(1);
+		BigDecimal hourlyReducedRate = new BigDecimal(5000);
 
-		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
-				normalPeriods);
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
-		Period p = new Period(5, 12);
-
-		BigDecimal answer = new BigDecimal(5003);
-		Assertions.assertEquals(answer, rate.calculate(p));
+		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
 
 	}
 }
