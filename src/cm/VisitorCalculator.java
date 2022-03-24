@@ -10,8 +10,10 @@ public class VisitorCalculator implements Calculator {
     @Override
     public BigDecimal calculate(BigDecimal preCalculation) {
         BigDecimal result = preCalculation;
-        result = result.subtract(new BigDecimal(10));
-        result = result.divide(new BigDecimal(2));
+        if (result.compareTo(new BigDecimal(10)) == 1) {
+            result = result.subtract(new BigDecimal(10));
+            result = result.divide(new BigDecimal(2));
+        }
         return result;
 
     }
