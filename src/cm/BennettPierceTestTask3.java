@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BennettPierceTestTask3 {
@@ -74,119 +75,130 @@ class BennettPierceTestTask3 {
 	static int[] rateTestExpectedExceptionResultsIndices = { 0, 1, 2, 5, 6, 8, 9, 11, 13, 18, 19, 23, 24, 28, 29, 30,
 			31, 32, 33, 34, 35, 36, 37, 38, 39 };
 
-	@Test
-	void periodTest() {
-		for (int i = 0; i < numberPeriodTests; i++) {
-			int index = i;
-			Object result = periodTestExpectedResults[index];
-			try {
-				Period p = new Period(periodTestStartHours[index], periodTestEndHours[index]);
-				assertEquals(result, p.duration());
-			} catch (IllegalArgumentException error) {
-				Assertions.assertThrows(IllegalArgumentException.class, () -> {
-					new Period(periodTestStartHours[index], periodTestEndHours[index]);
-				}, "IllegalArgumentException was excepted.");
-			}
-		}
-	}
-
-	@Test
-	void rateValidTest() {
-		System.out.println("\nTesting Rate Class...");
-		BigDecimal rate;
-		for (int i = 0; i < rateTestExpectedValidResultsIndices.length; i++) {
-
-			reducedPeriods = new ArrayList<Period>();
-			normalPeriods = new ArrayList<Period>();
-
-			int index = rateTestExpectedValidResultsIndices[i];
-			Rate rObject;
-			Period periodToTest;
-
-			System.out.println("\nTest: " + (index + 1));
-			BigDecimal result = new BigDecimal(rateTestExpectedValidResults[i]);
-
-			// Data Setup
-			if (reducedStartHours[index].length > 0) {
-				for (int k = 0; k < reducedStartHours[index].length; k++) {
-					reducedPeriods.add(new Period(reducedStartHours[index][k], reducedEndHours[index][k]));
-					System.out.println(k + " : " + reducedPeriods.get(k).duration());
-				}
-			}
-			if (normalStartHours[index].length > 0) {
-				for (int k = 0; k < normalStartHours[index].length; k++) {
-					normalPeriods.add(new Period(normalStartHours[index][k], normalEndHours[index][k]));
-					System.out.println(k + " : " + normalPeriods.get(k).duration());
-				}
-			}
-			rObject = new Rate(kinds[index % 4], new BigDecimal(normalRates[index]),
-					new BigDecimal(reducedRates[index]), reducedPeriods, normalPeriods);
-			periodToTest = new Period(periodToTestStartHours[index], periodToTestEndHours[index]);
-
-			System.out.println(" - " + periodToTest.duration());
-			rate = rObject.calculate(periodToTest);
-			assertEquals(result, rate);
-			System.out.print(", rate : " + result);
-		}
-	}
-
-	@Test
-	void rateExceptionTest() {
-		System.out.println("\nTesting Rate Class...");
-
-		String failureMessage = "";
-		for (int i = 0; i < rateTestExpectedExceptionResultsIndices.length; i++) {
-			int index = rateTestExpectedExceptionResultsIndices[i];
-
-			reducedPeriods = new ArrayList<Period>();
-			normalPeriods = new ArrayList<Period>();
-
-			if (normalStartHours[index] != null) {
-				if (normalStartHours[index].length > 0) {
-					for (int k = 0; k < normalStartHours[index].length; k++) {
-						normalPeriods.add(new Period(normalStartHours[index][k], normalEndHours[index][k]));
-					}
-				} else {
-					normalPeriods.add(null);
-				}
-			} else {
-				normalPeriods = null;
-			}
-
-			if (reducedStartHours[index] != null) {
-				if (reducedStartHours[index].length > 0) {
-					for (int k = 0; k < reducedStartHours[index].length; k++) {
-						reducedPeriods.add(new Period(reducedStartHours[index][k], reducedEndHours[index][k]));
-					}
-				} else {
-					reducedPeriods.add(null);
-				}
-			} else {
-				reducedPeriods = null;
-			}
-
-			BigDecimal tempNormal = normalRates[index] == null ? null : new BigDecimal(normalRates[index]);
-			BigDecimal tempReduced = reducedRates[index] == null ? null : new BigDecimal(reducedRates[index]);
-
-			try {
-				Assertions.assertThrows(IllegalArgumentException.class, () -> {
-
-					new Rate(kinds[index % 4], tempNormal, tempReduced, reducedPeriods,
-							normalPeriods);
-				});
-			} catch (AssertionError failure) {
-				failureMessage = failureMessage + "Test: " + (index + 1) + ", " + failure.getMessage() + "\n";
-			}
-
-		}
-		if (failureMessage.length() > 0) {
-			throw new AssertionError(failureMessage);
-		}
-	}
-
+	/*
+	 * @Test
+	 * void periodTest() {
+	 * for (int i = 0; i < numberPeriodTests; i++) {
+	 * int index = i;
+	 * Object result = periodTestExpectedResults[index];
+	 * try {
+	 * Period p = new Period(periodTestStartHours[index],
+	 * periodTestEndHours[index]);
+	 * assertEquals(result, p.duration());
+	 * } catch (IllegalArgumentException error) {
+	 * Assertions.assertThrows(IllegalArgumentException.class, () -> {
+	 * new Period(periodTestStartHours[index], periodTestEndHours[index]);
+	 * }, "IllegalArgumentException was excepted.");
+	 * }
+	 * }
+	 * }
+	 * 
+	 * @Test
+	 * void rateValidTest() {
+	 * System.out.println("\nTesting Rate Class...");
+	 * BigDecimal rate;
+	 * for (int i = 0; i < rateTestExpectedValidResultsIndices.length; i++) {
+	 * 
+	 * reducedPeriods = new ArrayList<Period>();
+	 * normalPeriods = new ArrayList<Period>();
+	 * 
+	 * int index = rateTestExpectedValidResultsIndices[i];
+	 * Rate rObject;
+	 * Period periodToTest;
+	 * 
+	 * System.out.println("\nTest: " + (index + 1));
+	 * BigDecimal result = new BigDecimal(rateTestExpectedValidResults[i]);
+	 * 
+	 * // Data Setup
+	 * if (reducedStartHours[index].length > 0) {
+	 * for (int k = 0; k < reducedStartHours[index].length; k++) {
+	 * reducedPeriods.add(new Period(reducedStartHours[index][k],
+	 * reducedEndHours[index][k]));
+	 * System.out.println(k + " : " + reducedPeriods.get(k).duration());
+	 * }
+	 * }
+	 * if (normalStartHours[index].length > 0) {
+	 * for (int k = 0; k < normalStartHours[index].length; k++) {
+	 * normalPeriods.add(new Period(normalStartHours[index][k],
+	 * normalEndHours[index][k]));
+	 * System.out.println(k + " : " + normalPeriods.get(k).duration());
+	 * }
+	 * }
+	 * rObject = new Rate(kinds[index % 4], new BigDecimal(normalRates[index]),
+	 * new BigDecimal(reducedRates[index]), reducedPeriods, normalPeriods);
+	 * periodToTest = new Period(periodToTestStartHours[index],
+	 * periodToTestEndHours[index]);
+	 * 
+	 * System.out.println(" - " + periodToTest.duration());
+	 * rate = rObject.calculate(periodToTest);
+	 * assertEquals(result, rate);
+	 * System.out.print(", rate : " + result);
+	 * }
+	 * }
+	 * 
+	 * @Test
+	 * void rateExceptionTest() {
+	 * System.out.println("\nTesting Rate Class...");
+	 * 
+	 * String failureMessage = "";
+	 * for (int i = 0; i < rateTestExpectedExceptionResultsIndices.length; i++) {
+	 * int index = rateTestExpectedExceptionResultsIndices[i];
+	 * 
+	 * reducedPeriods = new ArrayList<Period>();
+	 * normalPeriods = new ArrayList<Period>();
+	 * 
+	 * if (normalStartHours[index] != null) {
+	 * if (normalStartHours[index].length > 0) {
+	 * for (int k = 0; k < normalStartHours[index].length; k++) {
+	 * normalPeriods.add(new Period(normalStartHours[index][k],
+	 * normalEndHours[index][k]));
+	 * }
+	 * } else {
+	 * normalPeriods.add(null);
+	 * }
+	 * } else {
+	 * normalPeriods = null;
+	 * }
+	 * 
+	 * if (reducedStartHours[index] != null) {
+	 * if (reducedStartHours[index].length > 0) {
+	 * for (int k = 0; k < reducedStartHours[index].length; k++) {
+	 * reducedPeriods.add(new Period(reducedStartHours[index][k],
+	 * reducedEndHours[index][k]));
+	 * }
+	 * } else {
+	 * reducedPeriods.add(null);
+	 * }
+	 * } else {
+	 * reducedPeriods = null;
+	 * }
+	 * 
+	 * BigDecimal tempNormal = normalRates[index] == null ? null : new
+	 * BigDecimal(normalRates[index]);
+	 * BigDecimal tempReduced = reducedRates[index] == null ? null : new
+	 * BigDecimal(reducedRates[index]);
+	 * 
+	 * try {
+	 * Assertions.assertThrows(IllegalArgumentException.class, () -> {
+	 * 
+	 * new Rate(kinds[index % 4], tempNormal, tempReduced, reducedPeriods,
+	 * normalPeriods);
+	 * });
+	 * } catch (AssertionError failure) {
+	 * failureMessage = failureMessage + "Test: " + (index + 1) + ", " +
+	 * failure.getMessage() + "\n";
+	 * }
+	 * 
+	 * }
+	 * if (failureMessage.length() > 0) {
+	 * throw new AssertionError(failureMessage);
+	 * }
+	 * }
+	 */
 	// 1 STAFF -5000 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// hourlyNormalRate >= 0 (2, 8) IllegalArgument Exception
 	@Test
+	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = -5000")
 	void test1() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
@@ -204,6 +216,54 @@ class BennettPierceTestTask3 {
 
 		Assertions.assertThrows(IllegalArgumentException.class, () -> {
 			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, normalPeriods, reducedPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+	}
+
+	// 2 STUDENT -1 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
+	// hourlyNormalRate >= 0 (0, 12) IllegalArgument Exception
+	@Test
+	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = -1")
+	void test2() throws IllegalArgumentException {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(-1);
+		BigDecimal hourlyReducedRate = new BigDecimal(1);
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, normalPeriods, reducedPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+	}
+
+	// MANAGEMENT 0 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
+	// hourlyNormalRate >= 0 (6, 10) IllegalArgument Exception
+	@Test
+	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = 0")
+	void test3() throws IllegalArgumentException {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(0);
+		BigDecimal hourlyReducedRate = new BigDecimal(1);
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, normalPeriods, reducedPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 	}
 }
