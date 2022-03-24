@@ -905,7 +905,31 @@ class BennettPierceTestTask3 {
 	}
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)]
 	// normal.notOverlapping(reduced) (0, 12) 45
+	@Test
+	@DisplayName("normal.notOverlapping(reduced)")
+	void test27() {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(2, 3));
+		reducedPeriods.add(new Period(4, 5));
+		reducedPeriods.add(new Period(6, 7));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Rate rate = new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+				normalPeriods);
+
+		Period p = new Period(0, 12);
+
+		BigDecimal answer = new BigDecimal(45);
+		Assertions.assertEquals(answer, rate.calculate(p));
+	}
 	// VISITOR 10 5 [] [] normal.notOverlapping(reduced) (6, 10) 0
 
 	// STAFF 10 5 [(1, 10)] [(5, 10)] normal.notOverlapping(reduced) (1, 19)
