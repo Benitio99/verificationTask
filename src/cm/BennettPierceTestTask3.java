@@ -559,7 +559,7 @@ class BennettPierceTestTask3 {
 	// STUDENT 2000 3000 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// hourlyNormalRate > hourlyReducedRate (1, 19) IllegalArgument Exception
 	@Test
-	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 7")
+	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 3000, hourlyReducedRate = 2000")
 	void test14() {
 
 		normalPeriods = new ArrayList<Period>();
