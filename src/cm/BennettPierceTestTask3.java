@@ -870,7 +870,7 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
 		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
@@ -878,7 +878,31 @@ class BennettPierceTestTask3 {
 	}
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// normal.notOverlapping(reduced) (2, 8) 25
+	@Test
+	@DisplayName("normal.notOverlapping(reduced)")
+	void test26() {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Rate rate = new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+				normalPeriods);
+
+		Period p = new Period(2, 8);
+
+		BigDecimal answer = new BigDecimal(25);
+		Assertions.assertEquals(answer, rate.calculate(p));
+	}
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)]
 	// normal.notOverlapping(reduced) (0, 12) 45
 
