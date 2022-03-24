@@ -766,7 +766,7 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
-		Rate rate = new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+		Rate rate = new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
 				normalPeriods);
 
 		Period p = new Period(2, 8);
@@ -804,7 +804,28 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 0
+	@Test
+	@DisplayName("reduced == ! overlapping")
+	void test23() {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+				normalPeriods);
+
+		Period p = new Period(6, 10);
+
+		BigDecimal answer = new BigDecimal(0);
+		Assertions.assertEquals(answer, rate.calculate(p));
+	}
 	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(8, 15), (10, 20)] reduced == !
 	// overlapping (1, 19) IllegalArgument Exception
 
