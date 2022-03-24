@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class BennettPierceTestTask2 {
+class BennettPierceTestTask3 {
 
 	/**
 	 * Data
@@ -184,4 +184,26 @@ class BennettPierceTestTask2 {
 		}
 	}
 
+	// 1 STAFF -5000 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
+	// hourlyNormalRate >= 0 (2, 8) IllegalArgument Exception
+	@Test
+	void test1() throws IllegalArgumentException {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(-5000);
+		BigDecimal hourlyReducedRate = new BigDecimal(1);
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, normalPeriods, reducedPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+	}
 }
