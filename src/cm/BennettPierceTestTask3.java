@@ -389,7 +389,7 @@ class BennettPierceTestTask3 {
 	// hourlyReducedRate >= 0 (6, 10) 0
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 0")
-	void test8() throws IllegalArgumentException {
+	void test8() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -419,7 +419,7 @@ class BennettPierceTestTask3 {
 	// not hitting correct boundary could be moved or removed or modified.
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 7")
-	void test9() {
+	void test9() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -447,7 +447,7 @@ class BennettPierceTestTask3 {
 	// not hitting correct boundary could be moved or removed or modified.
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 5000")
-	void test10() {
+	void test10() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -474,7 +474,7 @@ class BennettPierceTestTask3 {
 	// hourlyNormalRate > hourlyReducedRate (2, 8) 2
 	@Test
 	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 1, hourlyReducedRate = 0")
-	void test11() throws IllegalArgumentException {
+	void test11() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -504,7 +504,7 @@ class BennettPierceTestTask3 {
 	// not hitting correct boundary could be moved or removed or modified.
 	@Test
 	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 0, hourlyReducedRate = -1")
-	void test12() {
+	void test12() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -531,7 +531,7 @@ class BennettPierceTestTask3 {
 	// hourlyNormalRate > hourlyReducedRate (6, 10) 4000
 	@Test
 	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 3000, hourlyReducedRate = 2000")
-	void test13() throws IllegalArgumentException {
+	void test13() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -560,7 +560,7 @@ class BennettPierceTestTask3 {
 	// hourlyNormalRate > hourlyReducedRate (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 2000, hourlyReducedRate = 3000")
-	void test14() {
+	void test14() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -587,7 +587,7 @@ class BennettPierceTestTask3 {
 	// hourlyNormalRate > hourlyReducedRate (5, 12) 34
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 0")
-	void test15() throws IllegalArgumentException {
+	void test15() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -599,15 +599,15 @@ class BennettPierceTestTask3 {
 		reducedPeriods.add(new Period(9, 10));
 		reducedPeriods.add(new Period(11, 12));
 
-		BigDecimal hourlyNormalRate = new BigDecimal(1);
-		BigDecimal hourlyReducedRate = new BigDecimal(0);
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(8);
 
 		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
 				normalPeriods);
 
-		Period p = new Period(6, 10);
+		Period p = new Period(5, 12);
 
-		BigDecimal answer = new BigDecimal(0);
+		BigDecimal answer = new BigDecimal(34);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
@@ -616,7 +616,7 @@ class BennettPierceTestTask3 {
 	// overlapping (2, 8) 25
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 0")
-	void test16() throws IllegalArgumentException {
+	void test16() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -645,7 +645,7 @@ class BennettPierceTestTask3 {
 	// overlapping (0, 12) 65
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 0")
-	void test17() throws IllegalArgumentException {
+	void test17() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -673,7 +673,7 @@ class BennettPierceTestTask3 {
 	// STUDENT 10 5 [] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping (6, 10) 10
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 0")
-	void test18() throws IllegalArgumentException {
+	void test18() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -702,7 +702,7 @@ class BennettPierceTestTask3 {
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 7")
-	void test19() {
+	void test19() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -729,7 +729,7 @@ class BennettPierceTestTask3 {
 	// overlapping (5, 12) IllegalArgument Exception
 	@Test
 	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 7")
-	void test20() {
+	void test20() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
