@@ -62,10 +62,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    94.4%
+    83.3%
   </span>
   <span class="absValue">
-    (17/18)
+    (15/18)
   </span>
 </td>
 <td class="coverageStat">
@@ -135,7 +135,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">48</i>&nbsp;    private boolean isValidPeriods(ArrayList&lt;Period&gt; periods1, ArrayList&lt;Period&gt; periods2) {
 <b class="fc"><i class="no-highlight">49</i>&nbsp;        Boolean isValid = true;</b>
 <b class="fc"><i class="no-highlight">50</i>&nbsp;        int i = 0;</b>
-<b class="fc"><i class="no-highlight">51</i>&nbsp;        while (i &lt; periods1.size() &amp;&amp; isValid) {</b>
+<b class="pc"><i class="no-highlight">51</i>&nbsp;        while (i &lt; periods1.size() &amp;&amp; isValid) {</b>
 <b class="fc"><i class="no-highlight">52</i>&nbsp;            isValid = isValidPeriod(periods1.get(i), periods2);</b>
 <b class="fc"><i class="no-highlight">53</i>&nbsp;            i++;</b>
 <i class="no-highlight">54</i>&nbsp;        }
@@ -172,7 +172,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <i class="no-highlight">85</i>&nbsp;    private Boolean isValidPeriod(Period period, List&lt;Period&gt; list) {
 <b class="fc"><i class="no-highlight">86</i>&nbsp;        Boolean isValid = true;</b>
 <b class="fc"><i class="no-highlight">87</i>&nbsp;        int i = 0;</b>
-<b class="fc"><i class="no-highlight">88</i>&nbsp;        while (i &lt; list.size() &amp;&amp; isValid) {</b>
+<b class="pc"><i class="no-highlight">88</i>&nbsp;        while (i &lt; list.size() &amp;&amp; isValid) {</b>
 <b class="fc"><i class="no-highlight">89</i>&nbsp;            isValid = !period.overlaps(list.get(i));</b>
 <b class="fc"><i class="no-highlight">90</i>&nbsp;            i++;</b>
 <i class="no-highlight">91</i>&nbsp;        }
@@ -213,7 +213,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-03-14 15:49</div>
+    <div style="float:right;">generated on 2022-03-24 14:34</div>
 </div>
 </body>
 </html>
