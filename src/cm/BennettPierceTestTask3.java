@@ -267,9 +267,11 @@ class BennettPierceTestTask3 {
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 	}
 
+	// VISITOR 7 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] hourlyNormalRate
+	// >= 0 (1, 19) 24
 	@Test
-	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = 0")
-	void test3() throws IllegalArgumentException {
+	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = 7")
+	void test4() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -281,11 +283,16 @@ class BennettPierceTestTask3 {
 		reducedPeriods.add(new Period(9, 10));
 		reducedPeriods.add(new Period(11, 12));
 
-		BigDecimal hourlyNormalRate = new BigDecimal(0);
+		BigDecimal hourlyNormalRate = new BigDecimal(7);
 		BigDecimal hourlyReducedRate = new BigDecimal(1);
 
-		Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, normalPeriods, reducedPeriods);
-		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, normalPeriods,
+				reducedPeriods);
+
+		Period p = new Period(1, 19);
+
+		BigDecimal answer = new BigDecimal(24);
+		Assertions.assertEquals(answer, rate.calculate(p));
+
 	}
 }
