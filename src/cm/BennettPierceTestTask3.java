@@ -422,13 +422,9 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(1);
 		BigDecimal hourlyReducedRate = new BigDecimal(7);
 
-		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
-				normalPeriods);
-
-		Period p = new Period(1, 19);
-
-		BigDecimal answer = new BigDecimal(24);
-		Assertions.assertEquals(answer, rate.calculate(p));
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
 	}
 
