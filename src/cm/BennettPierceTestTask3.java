@@ -996,11 +996,62 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
 		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
 		Assertions.assertEquals("The periods overlaps", thrown.getMessage());
 
 	}
-	////
+
+	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [(8, 16), (10, 12)] reduced == !
+	// overlapping (1, 19) IllegalArgument Exception
+	@Test
+	@DisplayName("reduced == ! overlapping")
+	void test31() throws IllegalArgumentException {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(8, 16));
+		reducedPeriods.add(new Period(10, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
+
+	}
+	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 12), (8, 9)] reduced == !
+	// overlapping (1, 19) IllegalArgument Exception
+
+	// STAFF 10 5 [(1, 16), (2, 7] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping
+	// (1, 19) IllegalArgument Exception
+
+	// STUDENT 10 5 [(4, 12), (2, 18)] [(7, 8),(9, 10),(11, 12)] normal == !
+	// overlapping (1, 19) IllegalArgument Exception
+
+	// MANAGEMENT 10 NULL [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
+	// hourlyReducedRate != NULL (5, 12) IllegalArgument Exception
+
+	// VISITOR NULL 10 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
+	// hourlyNormalRate != NULL (2, 8) IllegalArgument Exception
+
+	// STAFF 10 5 NULL [(2, 3),(4, 5),(6, 7)] normal != NULL (2, 12) IllegalArgument
+	// Exception
+
+	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] NULL reduced != NULL (6, 10)
+	// IllegalArgument Exception
+
+	// MANAGEMENT 0 0 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (1,
+	// 19) IllegalArgument Exception
+
+	// VISITOR 5 5 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (5, 12)
+	// IllegalArgument Exception
 }
