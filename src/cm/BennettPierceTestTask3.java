@@ -987,11 +987,10 @@ class BennettPierceTestTask3 {
 	void test30() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
-		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(5, 10));
 
 		reducedPeriods = new ArrayList<Period>();
-		reducedPeriods.add(new Period(10, 20));
-		reducedPeriods.add(new Period(8, 15));
+		reducedPeriods.add(new Period(1, 10));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
