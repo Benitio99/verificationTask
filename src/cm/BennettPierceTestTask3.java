@@ -1161,7 +1161,7 @@ class BennettPierceTestTask3 {
 	// STAFF 10 5 NULL [(2, 3),(4, 5),(6, 7)] normal != NULL (2, 12) IllegalArgument
 	// Exception
 	@Test
-	@DisplayName("hourlyNormalRate != NULL")
+	@DisplayName("normal != NULL")
 	void test37() throws IllegalArgumentException {
 
 		normalPeriods = null;
@@ -1184,7 +1184,7 @@ class BennettPierceTestTask3 {
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] NULL reduced != NULL (6, 10)
 	// IllegalArgument Exception
 	@Test
-	@DisplayName("hourlyNormalRate != NULL")
+	@DisplayName("reduced != NULL")
 	void test38() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
@@ -1206,7 +1206,26 @@ class BennettPierceTestTask3 {
 	}
 	// MANAGEMENT 0 0 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (1,
 	// 19) IllegalArgument Exception
+	@Test
+	@DisplayName("hourlyNormalRate > hourlyReducedRate")
+	void test39() throws IllegalArgumentException {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(4, 8));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(12, 14));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(0);
+		BigDecimal hourlyReducedRate = new BigDecimal(0);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
+
+	}
 	// VISITOR 5 5 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (5, 12)
 	// IllegalArgument Exception
 }
