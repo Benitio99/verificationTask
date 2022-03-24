@@ -922,7 +922,7 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
-		Rate rate = new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
 				normalPeriods);
 
 		Period p = new Period(0, 12);
@@ -931,12 +931,71 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 	// VISITOR 10 5 [] [] normal.notOverlapping(reduced) (6, 10) 0
+	@Test
+	@DisplayName("normal.notOverlapping(reduced)")
+	void test28() {
 
+		normalPeriods = new ArrayList<Period>();
+
+		reducedPeriods = new ArrayList<Period>();
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Rate rate = new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+				normalPeriods);
+
+		Period p = new Period(6, 10);
+
+		BigDecimal answer = new BigDecimal(0);
+		Assertions.assertEquals(answer, rate.calculate(p));
+	}
 	// STAFF 10 5 [(1, 10)] [(5, 10)] normal.notOverlapping(reduced) (1, 19)
 	// IllegalArgument Exception
+	@Test
+	@DisplayName("normal.notOverlapping(reduced)")
+	void test29() throws IllegalArgumentException {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 10));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(5, 10));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The periods overlaps", thrown.getMessage());
+
+	}
 	// STUDENT 10 5 [(5, 10)] [(1, 10)] normal.notOverlapping(reduced) (5, 12)
 	// IllegalArgument Exception
+	@Test
+	@DisplayName("normal.notOverlapping(reduced)")
+	void test30() throws IllegalArgumentException {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(10, 20));
+		reducedPeriods.add(new Period(8, 15));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The periods overlaps", thrown.getMessage());
+
+	}
 	////
 }
