@@ -1059,23 +1059,23 @@ class BennettPierceTestTask3 {
 	// STAFF 10 5 [(1, 16), (2, 7] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping
 	// (1, 19) IllegalArgument Exception
 	@Test
-	@DisplayName("reduced == ! overlapping")
+	@DisplayName("normal == ! overlapping")
 	void test33() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
-		normalPeriods.add(new Period(1, 2));
-		normalPeriods.add(new Period(3, 4));
-		normalPeriods.add(new Period(5, 6));
+		normalPeriods.add(new Period(1, 16));
+		normalPeriods.add(new Period(2, 7));
 
 		reducedPeriods = new ArrayList<Period>();
-		reducedPeriods.add(new Period(10, 12));
-		reducedPeriods.add(new Period(8, 9));
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
 		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
