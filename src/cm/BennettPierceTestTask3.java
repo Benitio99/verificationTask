@@ -299,7 +299,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(1, 19);
 
-		BigDecimal answer = new BigDecimal(24);
+		BigDecimal answer = new BigDecimal(7);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
@@ -1081,6 +1081,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
 	// STUDENT 10 5 [(4, 12), (2, 18)] [(7, 8),(9, 10),(11, 12)] normal == !
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
@@ -1106,6 +1107,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
 	// MANAGEMENT 10 NULL [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// hourlyReducedRate != NULL (5, 12) IllegalArgument Exception
 	@Test
@@ -1132,6 +1134,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The rates cannot be null", thrown.getMessage());
 
 	}
+
 	// VISITOR NULL 10 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
 	// hourlyNormalRate != NULL (2, 8) IllegalArgument Exception
 	@Test
@@ -1158,6 +1161,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The rates cannot be null", thrown.getMessage());
 
 	}
+
 	// STAFF 10 5 NULL [(2, 3),(4, 5),(6, 7)] normal != NULL (2, 12) IllegalArgument
 	// Exception
 	@Test
@@ -1181,6 +1185,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("periods cannot be null", thrown.getMessage());
 
 	}
+
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] NULL reduced != NULL (6, 10)
 	// IllegalArgument Exception
 	@Test
@@ -1204,6 +1209,7 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("periods cannot be null", thrown.getMessage());
 
 	}
+
 	// MANAGEMENT 0 0 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (1,
 	// 19) IllegalArgument Exception
 	@Test
