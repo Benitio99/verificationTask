@@ -775,9 +775,34 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
+
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)] reduced == !
 	// overlapping (0, 12) 45
+	@Test
+	@DisplayName("reduced == ! overlapping")
+	void test22() {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Rate rate = new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+				normalPeriods);
+
+		Period p = new Period(0, 12);
+
+		BigDecimal answer = new BigDecimal(45);
+		Assertions.assertEquals(answer, rate.calculate(p));
+	}
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 0
 
 	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(8, 15), (10, 20)] reduced == !
