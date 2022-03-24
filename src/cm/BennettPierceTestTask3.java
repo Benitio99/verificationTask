@@ -1028,12 +1028,58 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
 	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 12), (8, 9)] reduced == !
 	// overlapping (1, 19) IllegalArgument Exception
+	// test failing - bug in code
+	@Test
+	@DisplayName("reduced == ! overlapping")
+	void test32() throws IllegalArgumentException {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(10, 12));
+		reducedPeriods.add(new Period(8, 9));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
+
+	}
 	// STAFF 10 5 [(1, 16), (2, 7] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping
 	// (1, 19) IllegalArgument Exception
+	@Test
+	@DisplayName("reduced == ! overlapping")
+	void test32() throws IllegalArgumentException {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(10, 12));
+		reducedPeriods.add(new Period(8, 9));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
+
+	}
 	// STUDENT 10 5 [(4, 12), (2, 18)] [(7, 8),(9, 10),(11, 12)] normal == !
 	// overlapping (1, 19) IllegalArgument Exception
 
