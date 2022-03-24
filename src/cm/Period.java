@@ -63,8 +63,10 @@ public class Period {
     }
 
     public boolean overlaps(Period period) {
-        // possible bug #1
+        // bug #1
         return this.endHour > period.startHour && this.startHour < period.endHour;
+        // return (this.endHour > period.startHour && this.endHour < period.endHour) ||
+        // (this.startHour > period.startHour && this.startHour < period.endHour);
 
     }
 }

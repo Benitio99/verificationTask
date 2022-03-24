@@ -1029,7 +1029,7 @@ class BennettPierceTestTask3 {
 
 	}
 
-	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 12), (8, 9)] reduced == !
+	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 12), (8, 16)] reduced == !
 	// overlapping (1, 19) IllegalArgument Exception
 	// test failing - bug in code
 	@Test
@@ -1043,7 +1043,7 @@ class BennettPierceTestTask3 {
 
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(10, 12));
-		reducedPeriods.add(new Period(8, 9));
+		reducedPeriods.add(new Period(8, 16));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
@@ -1055,11 +1055,12 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
 	// STAFF 10 5 [(1, 16), (2, 7] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping
 	// (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("reduced == ! overlapping")
-	void test32() throws IllegalArgumentException {
+	void test33() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
