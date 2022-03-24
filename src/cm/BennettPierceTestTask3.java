@@ -1175,7 +1175,7 @@ class BennettPierceTestTask3 {
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
 		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.VISITOR, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+			new Rate(CarParkKind.STAFF, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
 		Assertions.assertEquals("periods cannot be null", thrown.getMessage());
@@ -1183,7 +1183,27 @@ class BennettPierceTestTask3 {
 	}
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] NULL reduced != NULL (6, 10)
 	// IllegalArgument Exception
+	@Test
+	@DisplayName("hourlyNormalRate != NULL")
+	void test38() throws IllegalArgumentException {
 
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = null;
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("periods cannot be null", thrown.getMessage());
+
+	}
 	// MANAGEMENT 0 0 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (1,
 	// 19) IllegalArgument Exception
 
