@@ -628,15 +628,15 @@ class BennettPierceTestTask3 {
 		reducedPeriods.add(new Period(9, 10));
 		reducedPeriods.add(new Period(11, 12));
 
-		BigDecimal hourlyNormalRate = new BigDecimal(1);
-		BigDecimal hourlyReducedRate = new BigDecimal(0);
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
 		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
 				normalPeriods);
 
-		Period p = new Period(6, 10);
+		Period p = new Period(2, 8);
 
-		BigDecimal answer = new BigDecimal(0);
+		BigDecimal answer = new BigDecimal(25);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
