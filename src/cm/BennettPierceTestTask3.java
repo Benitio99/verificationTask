@@ -469,7 +469,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// MANAGEMENT 1 0 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
-	// hourlyNormalRate > hourlyReducedRate (2, 8) 2
+	// hourlyNormalRate > hourlyReducedRate (2, 8) 4
 	@Test
 	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 1, hourlyReducedRate = 0")
 	void test11() {
@@ -492,7 +492,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(2, 8);
 
-		BigDecimal answer = new BigDecimal(2);
+		BigDecimal answer = new BigDecimal(4);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}

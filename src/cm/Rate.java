@@ -44,6 +44,9 @@ public class Rate {
             case STAFF:
                 this.calc = new StaffCalculator();
                 break;
+            case MANAGEMENT:
+                this.calc = new ManagementCalculator();
+                break;
             default:
         }
 
