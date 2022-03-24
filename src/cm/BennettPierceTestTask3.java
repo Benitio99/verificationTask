@@ -1,7 +1,5 @@
 package cm;
 
-import static org.junit.Assert.assertEquals;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -276,7 +274,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// VISITOR 7 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] hourlyNormalRate
-	// >= 0 (1, 19) 24
+	// >= 0 (1, 19) 7
 	@Test
 	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = 7")
 	void test4() {
@@ -305,7 +303,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// 5 STAFF 5000 1 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
-	// hourlyNormalRate >= 0 (5, 12) 5003
+	// hourlyNormalRate >= 0 (5, 12) 16
 	@Test
 	@DisplayName("hourlyNormalRate >= 0 | hourlyNormalRate = 5000")
 	void test5() {
@@ -328,7 +326,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(5, 12);
 
-		BigDecimal answer = new BigDecimal(5003);
+		BigDecimal answer = new BigDecimal(16);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}

@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.rowset.CachedRowSet;
-
 public class Rate {
     // private CarParkKind kind;
     private BigDecimal hourlyNormalRate;
@@ -42,6 +40,9 @@ public class Rate {
         switch (kind) {
             case VISITOR:
                 this.calc = new VisitorCalculator();
+                break;
+            case STAFF:
+                this.calc = new StaffCalculator();
                 break;
             default:
         }
