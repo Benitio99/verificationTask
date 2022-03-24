@@ -4,12 +4,15 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.rowset.CachedRowSet;
+
 public class Rate {
     // private CarParkKind kind;
     private BigDecimal hourlyNormalRate;
     private BigDecimal hourlyReducedRate;
     private ArrayList<Period> reduced = new ArrayList<>();
     private ArrayList<Period> normal = new ArrayList<>();
+    private Calculator calc;
 
     public Rate(CarParkKind kind, BigDecimal normalRate, BigDecimal reducedRate, ArrayList<Period> reducedPeriods,
             ArrayList<Period> normalPeriods) {
@@ -36,6 +39,13 @@ public class Rate {
         this.hourlyReducedRate = reducedRate;
         this.reduced = reducedPeriods;
         this.normal = normalPeriods;
+        switch (kind) {
+            case VISITOR:
+                this.calc = new VisitorCalculator();
+                break;
+            default:
+        }
+
     }
 
     /**
@@ -93,10 +103,15 @@ public class Rate {
     }
 
     public BigDecimal calculate(Period periodStay) {
+        // return calc.calculate(periodStay, this.hourlyNormalRate,
+        // this.hourlyReducedRate, this.normal, this.reduced);
+
         int normalRateHours = periodStay.occurences(normal);
         int reducedRateHours = periodStay.occurences(reduced);
-        return (this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours))).add(
+        BigDecimal result = (this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours))).add(
                 this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
+        return this.calc.calculate(result);
+
     }
 
 }
