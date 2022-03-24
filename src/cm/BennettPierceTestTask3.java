@@ -648,24 +648,24 @@ class BennettPierceTestTask3 {
 	void test17() {
 
 		normalPeriods = new ArrayList<Period>();
-		normalPeriods.add(new Period(1, 2));
-		normalPeriods.add(new Period(3, 4));
-		normalPeriods.add(new Period(5, 6));
+		normalPeriods.add(new Period(1, 4));
+		normalPeriods.add(new Period(8, 9));
+		normalPeriods.add(new Period(10, 11));
 
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(7, 8));
 		reducedPeriods.add(new Period(9, 10));
 		reducedPeriods.add(new Period(11, 12));
 
-		BigDecimal hourlyNormalRate = new BigDecimal(1);
-		BigDecimal hourlyReducedRate = new BigDecimal(0);
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
 
 		Rate rate = new Rate(CarParkKind.MANAGEMENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
 				normalPeriods);
 
-		Period p = new Period(6, 10);
+		Period p = new Period(0, 12);
 
-		BigDecimal answer = new BigDecimal(0);
+		BigDecimal answer = new BigDecimal(65);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
