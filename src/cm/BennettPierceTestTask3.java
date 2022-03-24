@@ -724,7 +724,7 @@ class BennettPierceTestTask3 {
 	// VISITOR 10 5 [(3, 5), (1, 4)] [(7, 8),(9, 10),(11, 12)] normal == !
 	// overlapping (5, 12) IllegalArgument Exception
 	@Test
-	@DisplayName("hourlyReducedRate >= 0 | hourlyReducedRate = 7")
+	@DisplayName("normal == !overlapping")
 	void test20() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
@@ -746,5 +746,59 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+
+	// STAFF 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] reduced ==
+	// !overlapping (2, 8) 25
+	@Test
+	@DisplayName("reduced == ! overlapping")
+	void test21() {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(1, 2));
+		normalPeriods.add(new Period(3, 4));
+		normalPeriods.add(new Period(5, 6));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(7, 8));
+		reducedPeriods.add(new Period(9, 10));
+		reducedPeriods.add(new Period(11, 12));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(10);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Rate rate = new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods,
+				normalPeriods);
+
+		Period p = new Period(2, 8);
+
+		BigDecimal answer = new BigDecimal(25);
+		Assertions.assertEquals(answer, rate.calculate(p));
+
+	}
+	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)] reduced == !
+	// overlapping (0, 12) 45
+
+	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 0
+
+	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(8, 15), (10, 20)] reduced == !
+	// overlapping (1, 19) IllegalArgument Exception
+
+	// STAFF 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 20), (8, 15)] reduced == !
+	// overlapping (5, 12) IllegalArgument Exception
+
+	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
+	// normal.notOverlapping(reduced) (2, 8) 25
+
+	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)]
+	// normal.notOverlapping(reduced) (0, 12) 45
+
+	// VISITOR 10 5 [] [] normal.notOverlapping(reduced) (6, 10) 0
+
+	// STAFF 10 5 [(1, 10)] [(5, 10)] normal.notOverlapping(reduced) (1, 19)
+	// IllegalArgument Exception
+
+	// STUDENT 10 5 [(5, 10)] [(1, 10)] normal.notOverlapping(reduced) (5, 12)
+	// IllegalArgument Exception
+
 	////
 }
