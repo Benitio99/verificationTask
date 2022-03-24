@@ -746,4 +746,5 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals("The periods are not valid individually", thrown.getMessage());
 
 	}
+	/
 }
