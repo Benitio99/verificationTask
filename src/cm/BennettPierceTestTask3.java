@@ -526,7 +526,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// STAFF 3000 2000 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
-	// hourlyNormalRate > hourlyReducedRate (6, 10) 4000
+	// hourlyNormalRate > hourlyReducedRate (6, 10) 16
 	@Test
 	@DisplayName("hourlyNormalRate > hourlyReducedRate | hourlyNormalRate = 3000, hourlyReducedRate = 2000")
 	void test13() {
@@ -549,7 +549,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(6, 10);
 
-		BigDecimal answer = new BigDecimal(4000);
+		BigDecimal answer = new BigDecimal(16);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
@@ -611,7 +611,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] normal == !
-	// overlapping (2, 8) 25
+	// overlapping (2, 8) 7.5
 	@Test
 	@DisplayName("normal == ! overlapping")
 	void test16() {
@@ -634,13 +634,13 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(2, 8);
 
-		BigDecimal answer = new BigDecimal(25);
+		BigDecimal answer = new BigDecimal(7.5);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
 
 	// STAFF 10 5 [(1, 4),(8, 9),(10, 11)] [(7, 8),(9, 10),(11, 12)] normal == !
-	// overlapping (0, 12) 65
+	// overlapping (0, 12) 16
 	@Test
 	@DisplayName("normal == ! overlapping")
 	void test17() {
@@ -663,12 +663,13 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(0, 12);
 
-		BigDecimal answer = new BigDecimal(65);
+		BigDecimal answer = new BigDecimal(16);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
 
-	// STUDENT 10 5 [] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping (6, 10) 10
+	// STUDENT 10 5 [] [(7, 8),(9, 10),(11, 12)] normal == ! overlapping (6, 10)
+	// 8.875
 	@Test
 	@DisplayName("normal == ! overlapping")
 	void test18() {
@@ -688,7 +689,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(6, 10);
 
-		BigDecimal answer = new BigDecimal(10);
+		BigDecimal answer = new BigDecimal(8.875);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
@@ -746,7 +747,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// STAFF 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] reduced ==
-	// !overlapping (2, 8) 25
+	// !overlapping (2, 8) 16
 	@Test
 	@DisplayName("reduced == ! overlapping")
 	void test21() {
@@ -769,13 +770,13 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(2, 8);
 
-		BigDecimal answer = new BigDecimal(25);
+		BigDecimal answer = new BigDecimal(16);
 		Assertions.assertEquals(answer, rate.calculate(p));
 
 	}
 
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)] reduced == !
-	// overlapping (0, 12) 45
+	// overlapping (0, 12) 35.13
 	@Test
 	@DisplayName("reduced == ! overlapping")
 	void test22() {
@@ -798,11 +799,11 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(0, 12);
 
-		BigDecimal answer = new BigDecimal(45);
+		BigDecimal answer = new BigDecimal(35.13);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 
-	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 0
+	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 4
 	@Test
 	@DisplayName("reduced == ! overlapping")
 	void test23() {
@@ -822,7 +823,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(6, 10);
 
-		BigDecimal answer = new BigDecimal(0);
+		BigDecimal answer = new BigDecimal(4);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 
@@ -879,7 +880,7 @@ class BennettPierceTestTask3 {
 	}
 
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
-	// normal.notOverlapping(reduced) (2, 8) 25
+	// normal.notOverlapping(reduced) (2, 8) 20.13
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
 	void test26() {
@@ -902,7 +903,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(2, 8);
 
-		BigDecimal answer = new BigDecimal(25);
+		BigDecimal answer = new BigDecimal(20.13);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 
