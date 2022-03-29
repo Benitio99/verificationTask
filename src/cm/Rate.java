@@ -10,7 +10,7 @@ public class Rate {
     private BigDecimal hourlyReducedRate;
     private ArrayList<Period> reduced = new ArrayList<>();
     private ArrayList<Period> normal = new ArrayList<>();
-    private Calculator calc;
+    private CalculatorStrategy strategy;
 
     public Rate(CarParkKind kind, BigDecimal normalRate, BigDecimal reducedRate, ArrayList<Period> reducedPeriods,
             ArrayList<Period> normalPeriods) {
@@ -39,18 +39,17 @@ public class Rate {
         this.normal = normalPeriods;
         switch (kind) {
             case VISITOR:
-                this.calc = new VisitorCalculator();
+                this.strategy = new VisitorStrategy();
                 break;
             case STAFF:
-                this.calc = new StaffCalculator();
+                this.strategy = new StaffStrategy();
                 break;
             case MANAGEMENT:
-                this.calc = new ManagementCalculator();
+                this.strategy = new ManagementStrategy();
                 break;
             case STUDENT:
-                this.calc = new StudentCalculator();
+                this.strategy = new StudentStrategy();
                 break;
-            default:
         }
 
     }
@@ -117,8 +116,6 @@ public class Rate {
         int reducedRateHours = periodStay.occurences(reduced);
         BigDecimal result = (this.hourlyNormalRate.multiply(BigDecimal.valueOf(normalRateHours))).add(
                 this.hourlyReducedRate.multiply(BigDecimal.valueOf(reducedRateHours)));
-        return this.calc.calculate(result);
-
+        return this.strategy.getFinalCalculation(result);
     }
-
 }

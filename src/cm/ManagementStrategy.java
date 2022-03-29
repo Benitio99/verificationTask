@@ -2,11 +2,11 @@ package cm;
 
 import java.math.BigDecimal;
 
-public class ManagementCalculator implements Calculator {
+public class ManagementStrategy implements CalculatorStrategy {
 
     // MANAGEMENT: minimum payable is 4.00
     @Override
-    public BigDecimal calculate(BigDecimal preCalculation) {
+    public BigDecimal getFinalCalculation(BigDecimal preCalculation) {
         BigDecimal result = preCalculation;
         if (result.compareTo(new BigDecimal(4)) == -1) {
             result = new BigDecimal(4);

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > Period</title>
+  <title>Coverage Report > CarParkKind</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/highlight-idea.css";
@@ -20,7 +20,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">cm</a>
 </div>
 
-<h1>Coverage Summary for Class: Period (cm)</h1>
+<h1>Coverage Summary for Class: CarParkKind (cm)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -35,15 +35,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 <th class="coverageStat 
 ">
-  Block, %
-</th>
-<th class="coverageStat 
-">
   Line, %
 </th>
 </tr>
 <tr>
-  <td class="name">Period</td>
+  <td class="name">CarParkKind</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -54,26 +50,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    83.3%
+    100%
   </span>
   <span class="absValue">
-    (5/6)
+    (2/2)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    61.5%
+    100%
   </span>
   <span class="absValue">
-    (8/13)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    85.7%
-  </span>
-  <span class="absValue">
-    (18/21)
+    (2/2)
   </span>
 </td>
 </tr>
@@ -87,76 +75,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package cm;
 <i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import java.util.List;
-<i class="no-highlight">4</i>&nbsp;
-<i class="no-highlight">5</i>&nbsp;public class Period {
-<i class="no-highlight">6</i>&nbsp;    private int startHour;
-<i class="no-highlight">7</i>&nbsp;    private int endHour;
-<i class="no-highlight">8</i>&nbsp;
-<b class="fc"><i class="no-highlight">9</i>&nbsp;    public Period(int start, int end) {</b>
-<b class="pc"><i class="no-highlight">10</i>&nbsp;        if (start &gt;= end) {</b>
-<b class="nc"><i class="no-highlight">11</i>&nbsp;            throw new IllegalArgumentException(&quot;start of period cannot be later or equal to end of period&quot;);</b>
-<i class="no-highlight">12</i>&nbsp;        }
-<b class="pc"><i class="no-highlight">13</i>&nbsp;        if (start &lt; 0 || start &gt; 24 || end &lt; 0 || end &gt; 24) {</b>
-<b class="nc"><i class="no-highlight">14</i>&nbsp;            throw new IllegalArgumentException(&quot;start of period and end of period must be between 0 and 24&quot;);</b>
-<i class="no-highlight">15</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">16</i>&nbsp;        this.startHour = start;</b>
-<b class="fc"><i class="no-highlight">17</i>&nbsp;        this.endHour = end;</b>
-<i class="no-highlight">18</i>&nbsp;    }
-<i class="no-highlight">19</i>&nbsp;
-<i class="no-highlight">20</i>&nbsp;    /**
-<i class="no-highlight">21</i>&nbsp;     * checks if a given hour is within the period
-<i class="no-highlight">22</i>&nbsp;     * 
-<i class="no-highlight">23</i>&nbsp;     * @param hour the start of the hour to check
-<i class="no-highlight">24</i>&nbsp;     * @return true if the hour is within the period
-<i class="no-highlight">25</i>&nbsp;     */
-<i class="no-highlight">26</i>&nbsp;    private Boolean isIn(int hour) {
-<b class="fc"><i class="no-highlight">27</i>&nbsp;        return hour &gt;= this.startHour &amp;&amp; hour &lt; this.endHour;</b>
-<i class="no-highlight">28</i>&nbsp;    }
-<i class="no-highlight">29</i>&nbsp;
-<i class="no-highlight">30</i>&nbsp;    private static Boolean isIn(int hour, List&lt;Period&gt; list) {
-<b class="fc"><i class="no-highlight">31</i>&nbsp;        Boolean isIn = false;</b>
-<b class="fc"><i class="no-highlight">32</i>&nbsp;        int i = 0;</b>
-<b class="fc"><i class="no-highlight">33</i>&nbsp;        while (i &lt; list.size() &amp;&amp; !isIn) {</b>
-<b class="fc"><i class="no-highlight">34</i>&nbsp;            isIn = list.get(i).isIn(hour);</b>
-<b class="fc"><i class="no-highlight">35</i>&nbsp;            i++;</b>
-<i class="no-highlight">36</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">37</i>&nbsp;        return isIn;</b>
-<i class="no-highlight">38</i>&nbsp;    }
-<i class="no-highlight">39</i>&nbsp;
-<i class="no-highlight">40</i>&nbsp;    /**
-<i class="no-highlight">41</i>&nbsp;     * The duration of a period
-<i class="no-highlight">42</i>&nbsp;     * 
-<i class="no-highlight">43</i>&nbsp;     * @return the number of whole hours a this period covers
-<i class="no-highlight">44</i>&nbsp;     */
-<i class="no-highlight">45</i>&nbsp;    public int duration() {
-<b class="nc"><i class="no-highlight">46</i>&nbsp;        return this.endHour - this.startHour;</b>
-<i class="no-highlight">47</i>&nbsp;    }
-<i class="no-highlight">48</i>&nbsp;
-<i class="no-highlight">49</i>&nbsp;    /**
-<i class="no-highlight">50</i>&nbsp;     * Returns the numbers of hours this period is included in the list
-<i class="no-highlight">51</i>&nbsp;     * 
-<i class="no-highlight">52</i>&nbsp;     * @param list the list of periods to check
-<i class="no-highlight">53</i>&nbsp;     * @return the number of full hours covered by this period
-<i class="no-highlight">54</i>&nbsp;     */
-<i class="no-highlight">55</i>&nbsp;    public int occurences(List&lt;Period&gt; list) {
-<b class="fc"><i class="no-highlight">56</i>&nbsp;        int occurences = 0;</b>
-<b class="fc"><i class="no-highlight">57</i>&nbsp;        for (int hour = this.startHour; hour &lt; this.endHour; hour++) {</b>
-<b class="fc"><i class="no-highlight">58</i>&nbsp;            if (isIn(hour, list)) {</b>
-<b class="fc"><i class="no-highlight">59</i>&nbsp;                occurences++;</b>
-<i class="no-highlight">60</i>&nbsp;            }
-<i class="no-highlight">61</i>&nbsp;        }
-<b class="fc"><i class="no-highlight">62</i>&nbsp;        return occurences;</b>
-<i class="no-highlight">63</i>&nbsp;    }
-<i class="no-highlight">64</i>&nbsp;
-<i class="no-highlight">65</i>&nbsp;    public boolean overlaps(Period period) {
-<i class="no-highlight">66</i>&nbsp;        // bug #1
-<b class="fc"><i class="no-highlight">67</i>&nbsp;        return this.endHour &gt; period.startHour &amp;&amp; this.startHour &lt; period.endHour;</b>
-<i class="no-highlight">68</i>&nbsp;        // return (this.endHour &gt; period.startHour &amp;&amp; this.endHour &lt; period.endHour) ||
-<i class="no-highlight">69</i>&nbsp;        // (this.startHour &gt; period.startHour &amp;&amp; this.startHour &lt; period.endHour);
-<i class="no-highlight">70</i>&nbsp;
-<i class="no-highlight">71</i>&nbsp;    }
-<i class="no-highlight">72</i>&nbsp;}
+<b class="fc"><i class="no-highlight">3</i>&nbsp;public enum CarParkKind {</b>
+<b class="fc"><i class="no-highlight">4</i>&nbsp;    STAFF, STUDENT, MANAGEMENT, VISITOR</b>
+<i class="no-highlight">5</i>&nbsp;}
 </div>
 </pre>
 </div>
@@ -183,7 +104,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-03-24 14:34</div>
+    <div style="float:right;">generated on 2022-03-28 11:47</div>
 </div>
 </body>
 </html>

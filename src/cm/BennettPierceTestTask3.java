@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 
 class BennettPierceTestTask3 {
 
-	/**
-	 * Data
-	 */
 	private static final IllegalArgumentException ILLEGAL_ARGUMENT_EXCEPTION = new IllegalArgumentException();
 
 	static int numberPeriodTests = 21;
@@ -24,54 +21,11 @@ class BennettPierceTestTask3 {
 			ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION, 2, 5, 5, 6, ILLEGAL_ARGUMENT_EXCEPTION,
 			1, ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION, ILLEGAL_ARGUMENT_EXCEPTION, 24 };
 
-	static int numberRateTests = 40;
-	static int[][] reducedStartHours = { { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 },
-			{ 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 },
-			{ 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 },
-			{ 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 2, 4, 6 }, {}, { 8, 10 }, { 10, 8 }, { 7, 9, 11 }, { 2, 4, 6 },
-			{}, { 5 }, { 1 }, { 8, 10 }, { 10, 8 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 }, { 7, 9, 11 },
-			{ 2, 4, 6 }, null, { 12 }, { 12 } };
-	static int[][] reducedEndHours = { { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 },
-			{ 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 },
-			{ 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 },
-			{ 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 }, { 3, 5, 7 }, {}, { 15, 20 }, { 20, 15 }, { 8, 10, 12 },
-			{ 3, 5, 7 }, {}, { 10 }, { 10 }, { 16, 12 }, { 12, 9 }, { 8, 10, 12 }, { 8, 10, 12 }, { 8, 10, 12 },
-			{ 8, 10, 12 }, { 3, 5, 7 }, null, { 14 }, { 14 } };
-
-	static int[][] normalStartHours = { { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 },
-			{ 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 },
-			{ 1, 3, 5 }, { 1, 3, 5 }, { 1, 8, 10 }, {}, { 1, 2 }, { 3, 1 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 },
-			{ 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 3, 5 }, {}, { 1 }, { 5 }, { 1, 3, 5 }, { 1, 3, 5 }, { 1, 2 },
-			{ 4, 2 }, { 1, 3, 5 }, { 1, 3, 5 }, null, { 1, 3, 5 }, { 4 }, { 4 } };
-	static int[][] normalEndHours = { { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 },
-			{ 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 },
-			{ 2, 4, 6 }, { 2, 4, 6 }, { 4, 9, 11 }, {}, { 6, 7 }, { 5, 4 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 },
-			{ 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, { 2, 4, 6 }, {}, { 10 }, { 10 }, { 2, 4, 6 }, { 2, 4, 6 }, { 16, 7 },
-			{ 12, 18 }, { 2, 4, 6 }, { 2, 4, 6 }, null, { 2, 4, 6 }, { 8 }, { 8 } };
-
 	static CarParkKind[] kinds = { CarParkKind.STAFF, CarParkKind.STUDENT, CarParkKind.MANAGEMENT,
 			CarParkKind.VISITOR };
 
-	static Integer[] normalRates = { -5000, -1, 0, 7, 5000, 1, 1, 1, 1, 1, 1, 0, 3000, 2000, 10, 10, 10, 10, 10, 10, 10,
-			10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, null, 10, 10, 0, 5 };
-	static Integer[] reducedRates = { 1, 1, 1, 1, 1, -5000, -1, 0, 7, 5000, 0, -1, 2000, 3000, 8, 5, 5, 5, 5, 5, 5, 5,
-			5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, null, 10, 5, 5, 0, 5 };
-
-	static int[] periodToTestStartHours = { 2, 0, 6, 1, 5, 2, 0, 6, 1, 5, 2, 0, 6, 1, 5, 2, 0, 6, 1, 5, 2, 0, 6, 1, 5,
-			2, 0, 6, 1, 5, 1, 1, 1, 1, 5, 2, 2, 6, 1, 5 };
-	static int[] periodToTestEndHours = { 8, 12, 10, 19, 12, 8, 12, 10, 19, 12, 8, 12, 10, 19, 12, 8, 12, 10, 19, 12, 8,
-			12, 10, 19, 12, 8, 12, 10, 19, 12, 19, 19, 19, 19, 12, 8, 12, 10, 19, 12 };
-
 	static ArrayList<Period> reducedPeriods;
 	static ArrayList<Period> normalPeriods;
-
-	static ArrayList<Rate> data = new ArrayList<Rate>(numberRateTests);
-	static ArrayList<Period> periodsToTest = new ArrayList<Period>(numberRateTests);
-
-	static int[] rateTestExpectedValidResults = { 24, 5003, 0, 2, 4000, 34, 25, 65, 10, 25, 45, 0, 25, 45, 0 };
-	static int[] rateTestExpectedValidResultsIndices = { 3, 4, 7, 10, 12, 14, 15, 16, 17, 20, 21, 22, 25, 26, 27 };
-	static int[] rateTestExpectedExceptionResultsIndices = { 0, 1, 2, 5, 6, 8, 9, 11, 13, 18, 19, 23, 24, 28, 29, 30,
-			31, 32, 33, 34, 35, 36, 37, 38, 39 };
 
 	/*
 	 * @Test
@@ -82,114 +36,12 @@ class BennettPierceTestTask3 {
 	 * try {
 	 * Period p = new Period(periodTestStartHours[index],
 	 * periodTestEndHours[index]);
-	 * assertEquals(result, p.duration());
+	 * Assertions.assertEquals(result, p.duration());
 	 * } catch (IllegalArgumentException error) {
 	 * Assertions.assertThrows(IllegalArgumentException.class, () -> {
 	 * new Period(periodTestStartHours[index], periodTestEndHours[index]);
 	 * }, "IllegalArgumentException was excepted.");
 	 * }
-	 * }
-	 * }
-	 * 
-	 * @Test
-	 * void rateValidTest() {
-	 * System.out.println("\nTesting Rate Class...");
-	 * BigDecimal rate;
-	 * for (int i = 0; i < rateTestExpectedValidResultsIndices.length; i++) {
-	 * 
-	 * reducedPeriods = new ArrayList<Period>();
-	 * normalPeriods = new ArrayList<Period>();
-	 * 
-	 * int index = rateTestExpectedValidResultsIndices[i];
-	 * Rate rObject;
-	 * Period periodToTest;
-	 * 
-	 * System.out.println("\nTest: " + (index + 1));
-	 * BigDecimal result = new BigDecimal(rateTestExpectedValidResults[i]);
-	 * 
-	 * // Data Setup
-	 * if (reducedStartHours[index].length > 0) {
-	 * for (int k = 0; k < reducedStartHours[index].length; k++) {
-	 * reducedPeriods.add(new Period(reducedStartHours[index][k],
-	 * reducedEndHours[index][k]));
-	 * System.out.println(k + " : " + reducedPeriods.get(k).duration());
-	 * }
-	 * }
-	 * if (normalStartHours[index].length > 0) {
-	 * for (int k = 0; k < normalStartHours[index].length; k++) {
-	 * normalPeriods.add(new Period(normalStartHours[index][k],
-	 * normalEndHours[index][k]));
-	 * System.out.println(k + " : " + normalPeriods.get(k).duration());
-	 * }
-	 * }
-	 * rObject = new Rate(kinds[index % 4], new BigDecimal(normalRates[index]),
-	 * new BigDecimal(reducedRates[index]), reducedPeriods, normalPeriods);
-	 * periodToTest = new Period(periodToTestStartHours[index],
-	 * periodToTestEndHours[index]);
-	 * 
-	 * System.out.println(" - " + periodToTest.duration());
-	 * rate = rObject.calculate(periodToTest);
-	 * assertEquals(result, rate);
-	 * System.out.print(", rate : " + result);
-	 * }
-	 * }
-	 * 
-	 * @Test
-	 * void rateExceptionTest() {
-	 * System.out.println("\nTesting Rate Class...");
-	 * 
-	 * String failureMessage = "";
-	 * for (int i = 0; i < rateTestExpectedExceptionResultsIndices.length; i++) {
-	 * int index = rateTestExpectedExceptionResultsIndices[i];
-	 * 
-	 * reducedPeriods = new ArrayList<Period>();
-	 * normalPeriods = new ArrayList<Period>();
-	 * 
-	 * if (normalStartHours[index] != null) {
-	 * if (normalStartHours[index].length > 0) {
-	 * for (int k = 0; k < normalStartHours[index].length; k++) {
-	 * normalPeriods.add(new Period(normalStartHours[index][k],
-	 * normalEndHours[index][k]));
-	 * }
-	 * } else {
-	 * normalPeriods.add(null);
-	 * }
-	 * } else {
-	 * normalPeriods = null;
-	 * }
-	 * 
-	 * if (reducedStartHours[index] != null) {
-	 * if (reducedStartHours[index].length > 0) {
-	 * for (int k = 0; k < reducedStartHours[index].length; k++) {
-	 * reducedPeriods.add(new Period(reducedStartHours[index][k],
-	 * reducedEndHours[index][k]));
-	 * }
-	 * } else {
-	 * reducedPeriods.add(null);
-	 * }
-	 * } else {
-	 * reducedPeriods = null;
-	 * }
-	 * 
-	 * BigDecimal tempNormal = normalRates[index] == null ? null : new
-	 * BigDecimal(normalRates[index]);
-	 * BigDecimal tempReduced = reducedRates[index] == null ? null : new
-	 * BigDecimal(reducedRates[index]);
-	 * 
-	 * try {
-	 * Assertions.assertThrows(IllegalArgumentException.class, () -> {
-	 * 
-	 * new Rate(kinds[index % 4], tempNormal, tempReduced, reducedPeriods,
-	 * normalPeriods);
-	 * });
-	 * } catch (AssertionError failure) {
-	 * failureMessage = failureMessage + "Test: " + (index + 1) + ", " +
-	 * failure.getMessage() + "\n";
-	 * }
-	 * 
-	 * }
-	 * if (failureMessage.length() > 0) {
-	 * throw new AssertionError(failureMessage);
 	 * }
 	 * }
 	 */
@@ -610,11 +462,57 @@ class BennettPierceTestTask3 {
 
 	}
 
+	// MANAGEMENT 0 0 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (1,
+	// 19) IllegalArgument Exception
+	@Test
+	@DisplayName("hourlyNormalRate > hourlyReducedRate")
+	void test16() throws IllegalArgumentException {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(4, 8));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(12, 14));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(0);
+		BigDecimal hourlyReducedRate = new BigDecimal(0);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
+
+	}
+
+	// VISITOR 5 5 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (5, 12)
+	// IllegalArgument Exception
+	@Test
+	@DisplayName("hourlyNormalRate > hourlyReducedRate")
+	void test17() throws IllegalArgumentException {
+
+		normalPeriods = new ArrayList<Period>();
+		normalPeriods.add(new Period(4, 8));
+
+		reducedPeriods = new ArrayList<Period>();
+		reducedPeriods.add(new Period(12, 14));
+
+		BigDecimal hourlyNormalRate = new BigDecimal(5);
+		BigDecimal hourlyReducedRate = new BigDecimal(5);
+
+		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
+		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
+
+		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
+
+	}
+
 	// VISITOR 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)] normal == !
 	// overlapping (2, 8) 7.5
 	@Test
 	@DisplayName("normal == ! overlapping")
-	void test16() {
+	void test18() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -643,7 +541,7 @@ class BennettPierceTestTask3 {
 	// overlapping (0, 12) 16
 	@Test
 	@DisplayName("normal == ! overlapping")
-	void test17() {
+	void test19() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 4));
@@ -672,7 +570,7 @@ class BennettPierceTestTask3 {
 	// 8.875
 	@Test
 	@DisplayName("normal == ! overlapping")
-	void test18() {
+	void test20() {
 
 		normalPeriods = new ArrayList<Period>();
 
@@ -694,15 +592,17 @@ class BennettPierceTestTask3 {
 
 	}
 
-	// MANAGEMENT 10 5 [(1, 6), (2, 7] [(7, 8),(9, 10),(11, 12)] normal == !
+	// MANAGEMENT 10 5 [(1, 6), (2, 7), (9, 10)] [(7, 8),(9, 10),(11, 12)] normal ==
+	// !
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("normal == !overlapping")
-	void test19() throws IllegalArgumentException {
+	void test21() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 6));
 		normalPeriods.add(new Period(2, 7));
+		normalPeriods.add(new Period(9, 10));
 
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(7, 8));
@@ -724,7 +624,7 @@ class BennettPierceTestTask3 {
 	// overlapping (5, 12) IllegalArgument Exception
 	@Test
 	@DisplayName("normal == !overlapping")
-	void test20() throws IllegalArgumentException {
+	void test22() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(3, 5));
@@ -750,7 +650,7 @@ class BennettPierceTestTask3 {
 	// !overlapping (2, 8) 16
 	@Test
 	@DisplayName("reduced == ! overlapping")
-	void test21() {
+	void test23() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -776,10 +676,10 @@ class BennettPierceTestTask3 {
 	}
 
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(2, 3),(4, 5),(6, 7)] reduced == !
-	// overlapping (0, 12) 35.13
+	// overlapping (0, 12) 35.125
 	@Test
 	@DisplayName("reduced == ! overlapping")
-	void test22() {
+	void test24() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -799,14 +699,14 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(0, 12);
 
-		BigDecimal answer = new BigDecimal(35.13);
+		BigDecimal answer = new BigDecimal(35.125);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 
 	// MANAGEMENT 10 5 [(1, 2),(3, 4),(5, 6)] [] reduced == ! overlapping (6, 10) 4
 	@Test
 	@DisplayName("reduced == ! overlapping")
-	void test23() {
+	void test25() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -831,7 +731,7 @@ class BennettPierceTestTask3 {
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("reduced == !overlapping")
-	void test24() throws IllegalArgumentException {
+	void test26() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -853,11 +753,11 @@ class BennettPierceTestTask3 {
 
 	}
 
-	// STAFF 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 20), (8, 15)] reduced == !
+	// STAFF 10 5 [(1, 2),(3, 4),(5, 6)] [(10, 20), (8, 15), (21, 23)] reduced == !
 	// overlapping (5, 12) IllegalArgument Exception
 	@Test
 	@DisplayName("reduced == !overlapping")
-	void test25() throws IllegalArgumentException {
+	void test27() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -867,6 +767,7 @@ class BennettPierceTestTask3 {
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(10, 20));
 		reducedPeriods.add(new Period(8, 15));
+		reducedPeriods.add(new Period(21, 23));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
@@ -880,10 +781,10 @@ class BennettPierceTestTask3 {
 	}
 
 	// STUDENT 10 5 [(1, 2),(3, 4),(5, 6)] [(7, 8),(9, 10),(11, 12)]
-	// normal.notOverlapping(reduced) (2, 8) 20.13
+	// normal.notOverlapping(reduced) (2, 8) 20.125
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
-	void test26() {
+	void test28() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -903,7 +804,7 @@ class BennettPierceTestTask3 {
 
 		Period p = new Period(2, 8);
 
-		BigDecimal answer = new BigDecimal(20.13);
+		BigDecimal answer = new BigDecimal(20.125);
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 
@@ -911,7 +812,7 @@ class BennettPierceTestTask3 {
 	// normal.notOverlapping(reduced) (0, 12) 45
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
-	void test27() {
+	void test29() {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -938,7 +839,7 @@ class BennettPierceTestTask3 {
 	// VISITOR 10 5 [] [] normal.notOverlapping(reduced) (6, 10) 0
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
-	void test28() {
+	void test30() {
 
 		normalPeriods = new ArrayList<Period>();
 
@@ -956,17 +857,20 @@ class BennettPierceTestTask3 {
 		Assertions.assertEquals(answer, rate.calculate(p));
 	}
 
-	// STAFF 10 5 [(1, 10)] [(5, 10)] normal.notOverlapping(reduced) (1, 19)
+	// STAFF 10 5 [(1, 10), (12, 18)] [(5, 10), (16, 18)]
+	// normal.notOverlapping(reduced) (1, 19)
 	// IllegalArgument Exception
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
-	void test29() throws IllegalArgumentException {
+	void test31() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 10));
+		normalPeriods.add(new Period(12, 14));
 
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(5, 10));
+		reducedPeriods.add(new Period(16, 18));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
@@ -979,17 +883,20 @@ class BennettPierceTestTask3 {
 
 	}
 
-	// STUDENT 10 5 [(5, 10)] [(1, 10)] normal.notOverlapping(reduced) (5, 12)
+	// STUDENT 10 5 [(5, 10), (12, 14)] [(1, 10), (16, 18)]
+	// normal.notOverlapping(reduced) (5, 12)
 	// IllegalArgument Exception
 	@Test
 	@DisplayName("normal.notOverlapping(reduced)")
-	void test30() throws IllegalArgumentException {
+	void test32() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(5, 10));
+		normalPeriods.add(new Period(12, 14));
 
 		reducedPeriods = new ArrayList<Period>();
 		reducedPeriods.add(new Period(1, 10));
+		reducedPeriods.add(new Period(16, 18));
 
 		BigDecimal hourlyNormalRate = new BigDecimal(10);
 		BigDecimal hourlyReducedRate = new BigDecimal(5);
@@ -1006,7 +913,7 @@ class BennettPierceTestTask3 {
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("reduced == ! overlapping")
-	void test31() throws IllegalArgumentException {
+	void test33() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -1033,7 +940,7 @@ class BennettPierceTestTask3 {
 	// test failing - bug in code
 	@Test
 	@DisplayName("reduced == ! overlapping")
-	void test32() throws IllegalArgumentException {
+	void test34() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -1059,7 +966,7 @@ class BennettPierceTestTask3 {
 	// (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("normal == ! overlapping")
-	void test33() throws IllegalArgumentException {
+	void test35() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 16));
@@ -1085,7 +992,7 @@ class BennettPierceTestTask3 {
 	// overlapping (1, 19) IllegalArgument Exception
 	@Test
 	@DisplayName("normal == ! overlapping")
-	void test34() throws IllegalArgumentException {
+	void test36() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(4, 12));
@@ -1111,7 +1018,7 @@ class BennettPierceTestTask3 {
 	// hourlyReducedRate != NULL (5, 12) IllegalArgument Exception
 	@Test
 	@DisplayName("hourlyReducedRate != NULL")
-	void test35() throws IllegalArgumentException {
+	void test37() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -1138,7 +1045,7 @@ class BennettPierceTestTask3 {
 	// hourlyNormalRate != NULL (2, 8) IllegalArgument Exception
 	@Test
 	@DisplayName("hourlyNormalRate != NULL")
-	void test36() throws IllegalArgumentException {
+	void test38() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -1165,7 +1072,7 @@ class BennettPierceTestTask3 {
 	// Exception
 	@Test
 	@DisplayName("normal != NULL")
-	void test37() throws IllegalArgumentException {
+	void test39() throws IllegalArgumentException {
 
 		normalPeriods = null;
 
@@ -1189,7 +1096,7 @@ class BennettPierceTestTask3 {
 	// IllegalArgument Exception
 	@Test
 	@DisplayName("reduced != NULL")
-	void test38() throws IllegalArgumentException {
+	void test40() throws IllegalArgumentException {
 
 		normalPeriods = new ArrayList<Period>();
 		normalPeriods.add(new Period(1, 2));
@@ -1206,52 +1113,6 @@ class BennettPierceTestTask3 {
 		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
 
 		Assertions.assertEquals("periods cannot be null", thrown.getMessage());
-
-	}
-
-	// MANAGEMENT 0 0 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (1,
-	// 19) IllegalArgument Exception
-	@Test
-	@DisplayName("hourlyNormalRate > hourlyReducedRate")
-	void test39() throws IllegalArgumentException {
-
-		normalPeriods = new ArrayList<Period>();
-		normalPeriods.add(new Period(4, 8));
-
-		reducedPeriods = new ArrayList<Period>();
-		reducedPeriods.add(new Period(12, 14));
-
-		BigDecimal hourlyNormalRate = new BigDecimal(0);
-		BigDecimal hourlyReducedRate = new BigDecimal(0);
-
-		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
-		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
-
-		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
-
-	}
-
-	// VISITOR 5 5 [(4, 8)] [(12, 14)] hourlyNormalRate > hourlyReducedRate (5, 12)
-	// IllegalArgument Exception
-	@Test
-	@DisplayName("hourlyNormalRate > hourlyReducedRate")
-	void test40() throws IllegalArgumentException {
-
-		normalPeriods = new ArrayList<Period>();
-		normalPeriods.add(new Period(4, 8));
-
-		reducedPeriods = new ArrayList<Period>();
-		reducedPeriods.add(new Period(12, 14));
-
-		BigDecimal hourlyNormalRate = new BigDecimal(5);
-		BigDecimal hourlyReducedRate = new BigDecimal(5);
-
-		Throwable thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
-			new Rate(CarParkKind.STUDENT, hourlyNormalRate, hourlyReducedRate, reducedPeriods, normalPeriods);
-		}, "Creating Rate with invalid inputs throws an IllegalArgumentException");
-
-		Assertions.assertEquals("The normal rate cannot be less or equal to the reduced rate", thrown.getMessage());
 
 	}
 }
